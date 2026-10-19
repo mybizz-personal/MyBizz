@@ -57,28 +57,35 @@ export default function Login() {
       // Check user status
       const { data: userData, error: userError } = await supabase
         .from('platform_users')
-        .select('status')
-        .eq('id', userId)
-        .single();
+        .select('id, status')
+        .or(`auth_user_id.eq.${userId},id.eq.${userId}`)
+        .maybeSingle();
         
-      if (userError || userData?.status !== 'Active') {
+      if (!userData) {
+        await supabase.auth.signOut();
+        throw new Error('Account authenticated, but no profile was found in platform_users. Please run the SQL setup script to link your user.');
+      }
+
+      if (userData.status !== 'Active') {
         await supabase.auth.signOut();
         throw new Error('Your account has been suspended or is inactive.');
       }
+
+      const internalUserId = userData.id;
       
       // Check business status (if applicable)
       const { data: bUser } = await supabase
         .from('business_users')
         .select('business_id')
-        .eq('user_id', userId)
-        .single();
+        .or(`user_id.eq.${internalUserId},user_id.eq.${userId}`)
+        .maybeSingle();
         
       if (bUser) {
         const { data: bData } = await supabase
           .from('businesses')
           .select('status')
           .eq('id', bUser.business_id)
-          .single();
+          .maybeSingle();
           
         if (bData && bData.status !== 'Active') {
           await supabase.auth.signOut();

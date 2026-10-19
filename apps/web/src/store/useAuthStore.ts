@@ -77,7 +77,7 @@ export const useAuthStore = create<AuthState>((set) => ({
             .from('businesses')
             .select('status')
             .eq('id', businessUserData.business_id)
-            .single();
+            .maybeSingle();
 
           if (businessError || businessData?.status !== 'Active') {
             console.error('Business is inactive or suspended.');

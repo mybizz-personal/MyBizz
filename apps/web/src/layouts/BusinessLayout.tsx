@@ -15,7 +15,7 @@ export default function BusinessLayout() {
 
   useEffect(() => {
     if (businessId) {
-      supabase.from('businesses').select('name, logo_url').eq('id', businessId).single().then(({data}) => {
+      supabase.from('businesses').select('name, logo_url').eq('id', businessId).maybeSingle().then(({data}) => {
         if (data) {
           setBusinessName(data.name);
           setBusinessLogo(data.logo_url);

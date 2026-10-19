@@ -44,6 +44,7 @@ CREATE TABLE platform_users (
   email VARCHAR(255) UNIQUE NOT NULL,
   first_name VARCHAR(100),
   last_name VARCHAR(100),
+  phone VARCHAR(20),
   status VARCHAR(50) DEFAULT 'Active', -- Active, Suspended, Invited
   created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
   updated_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP

@@ -17,7 +17,7 @@ export default function Settings() {
 
   useEffect(() => {
     if (businessId) {
-      supabase.from('businesses').select('logo_url').eq('id', businessId).single().then(({data}) => {
+      supabase.from('businesses').select('logo_url').eq('id', businessId).maybeSingle().then(({data}) => {
         if (data?.logo_url) setLogoUrl(data.logo_url);
       });
     }

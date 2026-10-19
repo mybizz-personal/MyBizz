@@ -1,0 +1,29 @@
+# Dependencies
+node_modules
+apps/*/node_modules
+packages/*/node_modules
+
+# Production builds
+dist
+dev-dist
+dist-ssr
+
+# Environment variables
+.env
+.env.local
+.env.*.local
+
+# OS & Logs
+.DS_Store
+*.log
+application-*.txt
+application.txt
+logs
+
+# Supabase local temp
+supabase/.branches
+supabase/.temp
+
+# IDE & Editor
+.vscode
+.idea

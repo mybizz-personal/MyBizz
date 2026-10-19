@@ -52,6 +52,7 @@ export const useAuthStore = create<AuthState>((set) => ({
           .from('platform_admins')
           .select('id')
           .or(`user_id.eq.${internalUserId},user_id.eq.${userId}`)
+          .limit(1)
           .maybeSingle();
           
         if (adminData) {
@@ -69,6 +70,7 @@ export const useAuthStore = create<AuthState>((set) => ({
           .from('business_users')
           .select('business_id, roles(name)')
           .or(`user_id.eq.${internalUserId},user_id.eq.${userId}`)
+          .limit(1)
           .maybeSingle();
 
         if (businessUserData) {
